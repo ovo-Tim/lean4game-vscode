@@ -1,0 +1,70 @@
+{
+  "name": "lean-game-vscode",
+  "displayName": "Lean Game VSCode",
+  "description": "Play Lean math games directly in VSCode with live proof checking",
+  "version": "0.0.1",
+  "publisher": "lean-game",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Programming Languages"],
+  "activationEvents": [
+    "onLanguage:lean4",
+    "workspaceContains:Game.lean"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "leanGame.openGame",
+        "title": "Lean Game: Open Game"
+      },
+      {
+        "command": "leanGame.showPanel",
+        "title": "Lean Game: Show Panel"
+      },
+      {
+        "command": "leanGame.regenerateSolutions",
+        "title": "Lean Game: Regenerate Solutions"
+      },
+      {
+        "command": "leanGame.showTree",
+        "title": "Lean Game: Show World Tree"
+      },
+      {
+        "command": "leanGame.importProgress",
+        "title": "Lean Game: Import Progress from JSON"
+      }
+    ],
+    "configuration": {
+      "title": "Lean Game",
+      "properties": {
+        "leanGame.gameRootPath": {
+          "type": "string",
+          "default": "",
+          "description": "Absolute path to the root of the Lean game directory (e.g. /path/to/RealAnalysisGame)"
+        }
+      }
+    },
+    "views": {
+      "explorer": [
+        {
+          "type": "webview",
+          "id": "leanGame.infoPanel",
+          "name": "Lean Game Info"
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "marked": "^12.0.0",
+    "marked-katex-extension": "^5.0.0",
+    "katex": "^0.16.9"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.20.0",
+    "typescript": "^5.4.0"
+  }
+}

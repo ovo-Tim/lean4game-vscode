@@ -1,0 +1,63 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--vscode-editor-background, #1e1e1e);
+  color: var(--vscode-editor-foreground, #ccc);
+  font-family: var(--vscode-font-family, sans-serif);
+  font-size: var(--vscode-font-size, 13px);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── Toolbar ──────────────────────────────────────────────────────────────── */
+#toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 5px 12px;
+  background: var(--vscode-statusBar-background, #007acc);
+  color: var(--vscode-statusBar-foreground, #fff);
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.btn-toolbar {
+  background: rgba(255,255,255,0.18);
+  color: inherit;
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 3px;
+  padding: 2px 10px;
+  cursor: pointer;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.btn-toolbar:hover { background: rgba(255,255,255,0.3); }
+.hidden { display: none !important; }
+
+/* ── Tree container ───────────────────────────────────────────────────────── */
+#tree-container {
+  flex: 1;
+  overflow: auto;
+  padding: 12px;
+}
+
+#tree-svg { display: block; }
+
+.empty-msg {
+  padding: 24px;
+  text-align: center;
+  opacity: 0.55;
+  font-style: italic;
+}
+
+/* ── SVG element styles ───────────────────────────────────────────────────── */
+.level-dot {
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.level-dot:hover { opacity: 0.7; }
+
+.world-node { cursor: default; }

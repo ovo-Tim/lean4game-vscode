@@ -1,0 +1,251 @@
+:root {
+  --gap: 12px;
+  --radius: 4px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--vscode-font-family, sans-serif);
+  font-size: var(--vscode-font-size, 13px);
+  color: var(--vscode-editor-foreground);
+  background: var(--vscode-editor-background);
+  padding: 0;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ── Status bar ─────────────────────────────────────────────────────────── */
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: var(--vscode-statusBar-background, #007acc);
+  color: var(--vscode-statusBar-foreground, #fff);
+  font-size: 12px;
+  font-weight: 500;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.status-bar.complete   { background: #388a34; }
+.status-bar.has-errors { background: #be1100; }
+.status-bar.incomplete { background: #b07800; }
+
+/* ── Content area ───────────────────────────────────────────────────────── */
+.content {
+  padding: var(--gap);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  flex: 1;
+}
+
+.level-header {
+  border-bottom: 1px solid var(--vscode-panel-border, #3c3c3c);
+  padding-bottom: var(--gap);
+}
+
+#level-world-level {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+}
+
+#level-title {
+  font-size: 1.1em;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+/* ── Sections ───────────────────────────────────────────────────────────── */
+.panel-section {
+  background: var(--vscode-sideBar-background, #252526);
+  border: 1px solid var(--vscode-panel-border, #3c3c3c);
+  border-radius: var(--radius);
+  padding: var(--gap);
+}
+
+.panel-section h3 {
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  opacity: 0.6;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+/* ── Markdown rendering ─────────────────────────────────────────────────── */
+#intro-content p,
+#conclusion-content p {
+  margin-bottom: 0.6em;
+}
+
+#intro-content code,
+#conclusion-content code {
+  font-family: var(--vscode-editor-font-family, monospace);
+  font-size: 0.9em;
+  background: var(--vscode-textBlockQuote-background, rgba(127,127,127,0.1));
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+#intro-content pre,
+#conclusion-content pre {
+  background: var(--vscode-textBlockQuote-background, rgba(127,127,127,0.1));
+  padding: 8px;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  font-family: var(--vscode-editor-font-family, monospace);
+  font-size: 0.9em;
+  margin-bottom: 0.6em;
+}
+
+/* ── Proof state / goals ────────────────────────────────────────────────── */
+.goals-empty {
+  font-style: italic;
+  opacity: 0.6;
+  font-size: 0.9em;
+}
+
+.goal-block { margin-bottom: 12px; }
+.goal-block:last-child { margin-bottom: 0; }
+
+.goal-username {
+  font-size: 0.8em;
+  opacity: 0.6;
+  margin-bottom: 4px;
+}
+
+.hypotheses {
+  font-family: var(--vscode-editor-font-family, monospace);
+  font-size: 0.88em;
+  margin-bottom: 4px;
+}
+
+.hyp-row { display: flex; gap: 6px; padding: 1px 0; }
+
+.hyp-names {
+  color: var(--vscode-symbolIcon-variableForeground, #9cdcfe);
+  font-weight: 500;
+}
+
+.hyp-sep { opacity: 0.5; }
+.hyp-type { flex: 1; word-break: break-all; }
+
+.goal-turnstile {
+  font-family: var(--vscode-editor-font-family, monospace);
+  font-size: 0.88em;
+  padding-top: 4px;
+  border-top: 1px solid var(--vscode-panel-border, #3c3c3c);
+  display: flex;
+  gap: 6px;
+}
+
+.turnstile-symbol {
+  color: var(--vscode-symbolIcon-operatorForeground, #d4d4d4);
+  font-weight: bold;
+}
+
+.goal-type-text { flex: 1; word-break: break-all; }
+
+.goal-separator {
+  border: none;
+  border-top: 1px dashed var(--vscode-panel-border, #3c3c3c);
+  margin: 8px 0;
+}
+
+/* ── Hints ──────────────────────────────────────────────────────────────── */
+.hint-item {
+  background: var(--vscode-textBlockQuote-background, rgba(127,127,127,0.08));
+  border-left: 3px solid var(--vscode-editorInfo-foreground, #75beff);
+  padding: 6px 8px;
+  margin-bottom: 8px;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: 0.9em;
+}
+
+.hint-item.hidden-hint {
+  border-left-color: var(--vscode-editorWarning-foreground, #cca700);
+}
+
+.hint-toggle {
+  background: var(--vscode-button-secondaryBackground, #3a3d41);
+  color: var(--vscode-button-secondaryForeground, #cccccc);
+  border: none;
+  border-radius: var(--radius);
+  padding: 4px 10px;
+  font-size: 0.85em;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.hint-toggle:hover {
+  background: var(--vscode-button-secondaryHoverBackground, #45494e);
+}
+
+/* ── Empty state ────────────────────────────────────────────────────────── */
+.empty-state {
+  padding: 24px var(--gap);
+  text-align: center;
+  opacity: 0.5;
+  font-style: italic;
+  flex: 1;
+}
+
+/* ── Nav buttons ────────────────────────────────────────────────────────── */
+.nav-buttons {
+  display: flex;
+  gap: 8px;
+  padding: var(--gap);
+  padding-top: 0;
+  border-top: 1px solid var(--vscode-panel-border, #3c3c3c);
+  margin-top: auto;
+  position: sticky;
+  bottom: 0;
+  background: var(--vscode-editor-background);
+  padding-top: 10px;
+}
+
+.nav-btn {
+  flex: 1;
+  background: var(--vscode-button-secondaryBackground, #3a3d41);
+  color: var(--vscode-button-secondaryForeground, #ccc);
+  border: none;
+  border-radius: var(--radius);
+  padding: 6px 12px;
+  font-size: 0.85em;
+  cursor: pointer;
+  text-align: center;
+}
+
+.nav-btn:hover {
+  background: var(--vscode-button-secondaryHoverBackground, #45494e);
+}
+
+.nav-btn-primary {
+  background: var(--vscode-button-background, #0e639c);
+  color: var(--vscode-button-foreground, #fff);
+}
+
+.nav-btn-primary:hover {
+  background: var(--vscode-button-hoverBackground, #1177bb);
+}
+
+/* ── KaTeX overrides ────────────────────────────────────────────────────── */
+.katex {
+  font-size: 1em;
+}
