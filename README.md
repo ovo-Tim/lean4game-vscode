@@ -2,10 +2,13 @@
 
 Play [lean4game](https://github.com/leanprover-community/lean4game) math games directly in VSCode — write proofs in `.lean` files and get live feedback from the Lean language server, without needing a browser or relay server.
 
+![Screenshot](imgs/image.png)
+
 ## Features
 
 - **Game panel** — shows the current level's introduction, live proof state (goals and hypotheses at your cursor), hints, and completion status
 - **World tree** — visual overview of all worlds and levels with completion progress
+  ![World Tree](imgs/image2.png)
 - **Live proof checking** — powered by the Lean LSP you already have installed; no extra setup
 - **Import progress** — import completed levels from a lean4game JSON export
 
@@ -32,13 +35,13 @@ Solution files are generated at `<game-root>/Solutions/<world>/<level>.lean`. Ea
 
 ## Commands
 
-| Command | Description |
-|---|---|
-| `Lean Game: Open Game` | Pick a game root directory and load all levels |
-| `Lean Game: Show Panel` | Reveal the game info panel |
-| `Lean Game: Show World Tree` | Reveal the world tree |
-| `Lean Game: Import Progress from JSON` | Import completed levels from a lean4game export |
-| `Lean Game: Regenerate Solutions` | Overwrite all solution stubs with fresh `sorry` files |
+| Command                                | Description                                           |
+| -------------------------------------- | ----------------------------------------------------- |
+| `Lean Game: Open Game`                 | Pick a game root directory and load all levels        |
+| `Lean Game: Show Panel`                | Reveal the game info panel                            |
+| `Lean Game: Show World Tree`           | Reveal the world tree                                 |
+| `Lean Game: Import Progress from JSON` | Import completed levels from a lean4game export       |
+| `Lean Game: Regenerate Solutions`      | Overwrite all solution stubs with fresh `sorry` files |
 
 ## Importing Progress from lean4game
 
@@ -50,8 +53,8 @@ If you have previously played a game on lean4game's website, you can export your
 
 ## Settings
 
-| Setting | Description |
-|---|---|
+| Setting                 | Description                                                                 |
+| ----------------------- | --------------------------------------------------------------------------- |
 | `leanGame.gameRootPath` | Absolute path to the game root; the game is auto-loaded on startup when set |
 
 ## Building from Source
