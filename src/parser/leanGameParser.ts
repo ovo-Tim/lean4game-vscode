@@ -66,23 +66,45 @@ function extractLeanString(
   // Handles both:
   //   "                ← closing " on its own line (standard Lean multi-line)
   //   ...content..."  ← closing " at end of a content line
-  let accum = afterQuote + '\n'
+  // Note: intermediate lines must be unescaped (e.g. \\\\ → \\) since
+  // tryCloseSingleLine only processes lines that contain the closing quote.
+  let accum = unescapeLeanString(afterQuote) + '\n'
   let i = startIdx + 1
   while (i < lines.length) {
     const line = lines[i]
     const closed = tryCloseSingleLine(line)
     if (closed !== null) {
-      // This line contains the closing "
+      // This line contains the closing " — already unescaped by tryCloseSingleLine
       accum += closed
       const value = accum.replace(/^\n/, '').replace(/\n$/, '')
       return { value, multiLine: true, endIdx: i }
     }
-    accum += line + '\n'
+    accum += unescapeLeanString(line) + '\n'
     i++
   }
   // unterminated string — return what we have
   const value = accum.replace(/^\n/, '').replace(/\n$/, '')
   return { value, multiLine: true, endIdx: i - 1 }
+}
+
+/**
+ * Unescape a Lean string fragment (without looking for a closing quote).
+ * Handles: \\ → \, \" → ", \n → n, etc. — same logic as tryCloseSingleLine
+ * but processes the entire input instead of stopping at an unescaped ".
+ */
+function unescapeLeanString(s: string): string {
+  let result = ''
+  let i = 0
+  while (i < s.length) {
+    if (s[i] === '\\' && i + 1 < s.length) {
+      result += s[i + 1]
+      i += 2
+    } else {
+      result += s[i]
+      i++
+    }
+  }
+  return result
 }
 
 // ─── Top-level keyword detector ──────────────────────────────────────────────
@@ -156,7 +178,7 @@ function extractHints(proofLines: string[]): GameHint[] {
     }
 
     // Multi-line hint — closing " may be on its own line or end a content line
-    let accum = afterQuote + '\n'
+    let accum = unescapeLeanString(afterQuote) + '\n'
     i++
     let closed = false
     while (i < proofLines.length) {
@@ -169,7 +191,7 @@ function extractHints(proofLines: string[]): GameHint[] {
         closed = true
         break
       }
-      accum += pl + '\n'
+      accum += unescapeLeanString(pl) + '\n'
       i++
     }
     if (!closed) {

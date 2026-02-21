@@ -497,7 +497,7 @@ function extractLeanString(lines, startIdx, lineRest) {
   if (single !== null) {
     return { value: single, multiLine: false, endIdx: startIdx };
   }
-  let accum = afterQuote + "\n";
+  let accum = unescapeLeanString(afterQuote) + "\n";
   let i = startIdx + 1;
   while (i < lines.length) {
     const line = lines[i];
@@ -507,11 +507,25 @@ function extractLeanString(lines, startIdx, lineRest) {
       const value2 = accum.replace(/^\n/, "").replace(/\n$/, "");
       return { value: value2, multiLine: true, endIdx: i };
     }
-    accum += line + "\n";
+    accum += unescapeLeanString(line) + "\n";
     i++;
   }
   const value = accum.replace(/^\n/, "").replace(/\n$/, "");
   return { value, multiLine: true, endIdx: i - 1 };
+}
+function unescapeLeanString(s) {
+  let result = "";
+  let i = 0;
+  while (i < s.length) {
+    if (s[i] === "\\" && i + 1 < s.length) {
+      result += s[i + 1];
+      i += 2;
+    } else {
+      result += s[i];
+      i++;
+    }
+  }
+  return result;
 }
 var TOP_LEVEL_KEYWORDS = /* @__PURE__ */ new Set([
   "import",
@@ -576,7 +590,7 @@ function extractHints(proofLines) {
       i++;
       continue;
     }
-    let accum = afterQuote + "\n";
+    let accum = unescapeLeanString(afterQuote) + "\n";
     i++;
     let closed = false;
     while (i < proofLines.length) {
@@ -589,7 +603,7 @@ function extractHints(proofLines) {
         closed = true;
         break;
       }
-      accum += pl + "\n";
+      accum += unescapeLeanString(pl) + "\n";
       i++;
     }
     if (!closed) {
