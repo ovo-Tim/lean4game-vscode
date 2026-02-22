@@ -464,9 +464,26 @@ export function parseGameDirectory(gameRoot: string): LevelData[] {
     }
   }
 
-  // Sort by world name then level number
+  // Sort by the L<N> group of the source directory, then non-Pset before Pset,
+  // then by world name, then by level number.  This matches the dependency
+  // structure inferred in gameLeanParser so that "next level" follows the
+  // intended game progression (e.g. Lecture 7 → PSets 7 → Lecture 8 …).
+  const dirOf = (l: LevelData) =>
+    l.sourceFilePath.match(/Game[/\\]Levels[/\\]([^/\\]+)/)?.[1] ?? ''
+  const groupOf = (dir: string) =>
+    parseInt(dir.match(/^[Ll](\d+)/)?.[1] ?? '0', 10)
+
   levels.sort((a, b) => {
-    if (a.world !== b.world) return a.world.localeCompare(b.world)
+    const dirA = dirOf(a), dirB = dirOf(b)
+    const gA = groupOf(dirA), gB = groupOf(dirB)
+    if (gA !== gB) return gA - gB
+    // Within the same L<N> group: non-Pset worlds before Pset worlds
+    const pA = /pset/i.test(dirA) ? 1 : 0
+    const pB = /pset/i.test(dirB) ? 1 : 0
+    if (pA !== pB) return pA - pB
+    // Different worlds in the same sub-group: alphabetical by directory name
+    if (a.world !== b.world) return dirA.localeCompare(dirB)
+    // Same world: by level number
     return a.level - b.level
   })
 

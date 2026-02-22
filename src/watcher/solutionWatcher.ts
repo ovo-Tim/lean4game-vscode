@@ -28,7 +28,9 @@ function getCompletionStatus(uri: vscode.Uri): CompletionStatus {
     } catch { /* ignore */ }
     return 'incomplete'
   }
-  return 'complete'
+  // Diagnostics show no errors/sorry — cross-check with file content in case
+  // Lean hasn't fully processed the file yet (e.g. only partial diagnostics).
+  return checkFileContent(uri.fsPath)
 }
 
 /**
