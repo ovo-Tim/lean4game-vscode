@@ -4,10 +4,16 @@
   "description": "Play Lean math games directly in VSCode with live proof checking",
   "version": "0.0.1",
   "publisher": "lean-game",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ovo-Tim/lean4game-vscode.git"
+  },
   "engines": {
     "vscode": "^1.85.0"
   },
-  "categories": ["Programming Languages"],
+  "categories": [
+    "Programming Languages"
+  ],
   "activationEvents": [
     "onLanguage:lean4",
     "workspaceContains:Game.lean"
